@@ -32,6 +32,10 @@ if __name__ == '__main__':
                     tasks = user.search_by_pattern()
                     for task in tasks:
                         print(task)
+                elif user_input == "e":
+                    tasks = user.search_by_date_range()
+                    for task in tasks:
+                        print(task)
                 elif user_input.lower() == "f":
                     break
                 else:

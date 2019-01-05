@@ -27,7 +27,18 @@ def get_date():
             date = datetime.datetime.strptime(date_input, '%d/%m/%Y')
         except ValueError:
             print("That's not a valid date. Please try again.")
+    return date
+
+
+def convert_date_to_string(date):
+    """
+    Convert date to string to save in json file
+    """
     return date.strftime('%d/%m/%Y')
+
+
+def convert_string_to_date(date_str):
+    return datetime.datetime.strptime(date_str, '%d/%m/%Y')
 
 
 def get_time_spent():

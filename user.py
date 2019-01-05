@@ -67,6 +67,7 @@ class User:
         utils.clear_screen()
         print("Date of the task")
         date = utils.get_date()
+        date = utils.convert_date_to_string(date)
         utils.clear_screen()
         title = input("Title of the task: ")
         utils.clear_screen()
@@ -91,6 +92,7 @@ class User:
         utils.clear_screen()
         print("Enter the date:\n")
         date = utils.get_date()
+        date = utils.convert_date_to_string(date)
         return list(filter(lambda task: task.date == date, self.tasks))
 
     def search_by_time_spent(self):
@@ -128,3 +130,20 @@ class User:
                 lambda task:
                 pattern.search(task.title) or pattern.search(task.notes),
                 self.tasks))
+
+    def search_by_date_range(self):
+        """
+        List tasks in date range
+        """
+        utils.clear_screen()
+        print("Please enter start and end dates to search for a date range:\n")
+        print("Start date: ")
+        start_date = utils.get_date()
+        print("End date: ")
+        end_date = utils.get_date()
+        tasks = filter(
+            lambda task:
+            utils.convert_string_to_date(task.date) >= start_date and
+            utils.convert_string_to_date(task.date) < end_date,
+            self.tasks)
+        return list(tasks)
