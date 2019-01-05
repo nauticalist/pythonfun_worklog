@@ -28,3 +28,17 @@ def get_date():
         except ValueError:
             print("That's not a valid date. Please try again.")
     return date.strftime('%d/%m/%Y')
+
+
+def get_time_spent():
+    """
+    Check time_spent is a valid integer
+    """
+    time_spent = None
+    while not time_spent:
+        try:
+            time_spent = int(input("Time spent(rounded minutes): "))
+        except ValueError:
+            print("That's not a valid nubmer. Please enter the number",
+                  "of minutes you spent on this task.")
+    return time_spent
