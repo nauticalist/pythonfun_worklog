@@ -147,3 +147,29 @@ class User:
             utils.convert_string_to_date(task.date) < end_date,
             self.tasks)
         return list(tasks)
+
+    def display_tasks(self, tasks):
+        """
+        List and iterate on tasks
+        """
+        total_tasks = len(tasks)
+        index = 0
+        while index < total_tasks:
+            utils.clear_screen()
+            print(tasks[index])
+            print("\nResult {} of {}\n".format(index + 1, total_tasks))
+            user_choice = input("\n[N]ext [P]revious" +
+                                " [E]dit [D]elete [M]ain Menu\n> ")
+            if user_choice.upper() == "N":
+                index += 1
+            elif user_choice.upper() == "P":
+                index -= 1
+            elif user_choice.upper() == "E":
+                pass
+            elif user_choice.upper() == "D":
+                pass
+            elif user_choice.upper() == "M":
+                break
+            else:
+                print("Invalid entry. Please retry")
+

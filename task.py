@@ -12,7 +12,7 @@ class Task:
         """
         representation of a task object
         """
-        task = "Date: {}\nTitle: {}\nTime Spent: {}\nNotes: {}".format(
+        task = "Date: {}\nTitle: {}\nTime Spent: {}\nNotes: {}\n".format(
             self.date, self.title, self.time_spent, self.notes)
         return task
 
