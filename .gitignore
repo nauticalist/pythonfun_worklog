@@ -1,5 +1,7 @@
 *.json
 !spec/*.json
 
+*.pyc
+!spec/*.pyc
 
 /__pycache__/*
