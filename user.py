@@ -122,8 +122,15 @@ class User:
         """
         utils.clear_screen()
         print("Please enter raw regular expression pattern:\n")
-        entry = input("Pattern: ")
-        pattern = re.compile(r'{}'.format(entry), re.X | re.M)
+        re_is_valid = False
+        while not re_is_valid:
+            entry = input("Pattern: ")
+            try:
+                pattern = re.compile(r'{}'.format(entry), re.X | re.M)
+                re_is_valid = True
+            except re.error:
+                print("That is now a valid regular expression. Please retry")
+
         return list(
             filter(
                 lambda task:
