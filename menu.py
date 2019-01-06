@@ -5,10 +5,11 @@ def show_main_menu(username):
     """
     Display main menu to user
     """
+    welcome_text = "What would you like to do {}?".format(username.title())
     clear_screen()
-    print("*"*26)
-    print("What would you like to do {}?".format(username.title()))
-    print("*"*26)
+    print("*"*len(welcome_text))
+    print(welcome_text)
+    print("*"*len(welcome_text))
     print("""
 a) Add new entry?
 b) Search in existing entries

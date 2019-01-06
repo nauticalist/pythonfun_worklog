@@ -3,7 +3,8 @@ import menu
 
 if __name__ == '__main__':
     # Get users detail
-    user = User.create_or_get_user_from_file()
+    username = input("Enter your username: ")
+    user = User.create_or_get_user_from_file(username)
 
     while True:
         menu.show_main_menu(user.username)
@@ -11,9 +12,10 @@ if __name__ == '__main__':
         if user_input.lower() == "a":
             # Creating new task
             user.create_users_task()
+            # Save it to the file
             user.write_json_file()
         elif user_input.lower() == "b":
-            # Searching tasks
+            # Searching operations
             while True:
                 menu.show_search_menu()
                 user_input = input("> ")
@@ -37,6 +39,7 @@ if __name__ == '__main__':
                 else:
                     print("Invalid entry. Please retry!")
         elif user_input.lower() == "c":
+            # Save data to json before quiting
             user.write_json_file()
             print("Thanks for using the Work Log program!")
             print("Come again soon.")

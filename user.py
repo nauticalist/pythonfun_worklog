@@ -44,19 +44,18 @@ class User:
         return user
 
     @classmethod
-    def create_or_get_user_from_file(cls):
+    def create_or_get_user_from_file(cls, username):
         """
         Request username and create json file if not exits
         If file exists fetch data from json file
         """
-        user_name = input("Enter your username: ")
-        filename = "{}.json".format(user_name.lower())
+        filename = "{}.json".format(username.lower())
         if utils.file_exists(filename):
             with open(filename, 'r') as file:
                 json_data = json.load(file)
             user = User.from_json(json_data)
         else:
-            user = User(user_name)
+            user = User(username)
 
         return user
 
@@ -148,49 +147,10 @@ class User:
             self.tasks)
         return list(tasks)
 
-    def display_tasks(self, tasks):
-        """
-        List and iterate on tasks
-        """
-        total_tasks = len(tasks)
-        index = 0
-        while index < total_tasks:
-            utils.clear_screen()
-            print(tasks[index])
-            print("\nResult {} of {}\n".format(index + 1, total_tasks))
-            user_choice = input("\n[N]ext [P]revious" +
-                                " [E]dit [D]elete [M]ain Menu\n> ")
-            if user_choice.upper() == "N":
-                if index == total_tasks - 1:
-                    index = 0
-                else:
-                    index += 1
-            elif user_choice.upper() == "P":
-                if index == 0:
-                    index = total_tasks - 1
-                else:
-                    index -= 1
-            elif user_choice.upper() == "E":
-                self.edit_task(tasks[index])
-                self.tasks = tasks
-            elif user_choice.upper() == "D":
-                confirm = input(
-                    "Do you realy want to remove this task?(Y/n)\n>")
-                while confirm.upper() == "Y":
-                    del tasks[index]
-                    total_tasks = len(tasks)
-                    self.tasks = tasks
-                    if total_tasks == 0:
-                        break
-                    else:
-                        index = 0
-                        break
-            elif user_choice.upper() == "M":
-                break
-            else:
-                print("Invalid entry. Please retry")
-
     def edit_task(self, task):
+        """
+        Edit and update selected task
+        """
         while True:
             print("*"*25)
             print("Editing task:")
@@ -211,3 +171,58 @@ class User:
             task.notes = notes
             print("Task updated")
             break
+
+    def delete_task(self, tasktodelete):
+        """
+        Delete task from users tasks
+        """
+        self.tasks = list(filter(
+            lambda task: task != tasktodelete, self.tasks))
+
+    def display_tasks(self, tasks):
+        """
+        List and iterate on tasks
+        """
+        total_tasks = len(tasks)
+        index = 0
+        while index < total_tasks:
+            utils.clear_screen()
+            print(tasks[index])
+            print("\nResult {} of {}\n".format(index + 1, total_tasks))
+            if total_tasks == 1:
+                user_choice = input("\n[E]dit [D]elete [M]ain Menu\n> ")
+            else:
+                user_choice = input("\n[N]ext [P]revious" +
+                                    " [E]dit [D]elete [M]ain Menu\n> ")
+            if user_choice.upper() == "N":
+                if index == total_tasks - 1:
+                    index = 0
+                else:
+                    index += 1
+            elif user_choice.upper() == "P":
+                if index == 0:
+                    index = total_tasks - 1
+                else:
+                    index -= 1
+            elif user_choice.upper() == "E":
+                self.edit_task(tasks[index])
+                self.write_json_file()
+            elif user_choice.upper() == "D":
+                confirm = input(
+                    "Do you realy want to remove this task?(Y/n)\n>")
+                while confirm.upper() == "Y":
+                    self.delete_task(tasks[index])
+                    del tasks[index]
+                    total_tasks = len(tasks)
+                    self.write_json_file()
+                    break
+                    if total_tasks == 0:
+                        break
+                    else:
+                        index = 0
+                        break
+            elif user_choice.upper() == "M":
+                break
+            else:
+                print("Invalid entry. Please retry")
+

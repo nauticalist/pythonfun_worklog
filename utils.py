@@ -38,6 +38,9 @@ def convert_date_to_string(date):
 
 
 def convert_string_to_date(date_str):
+    """
+    Convert date in a string to datetime obj
+    """
     return datetime.datetime.strptime(date_str, '%d/%m/%Y')
 
 
