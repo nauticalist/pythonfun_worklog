@@ -36,8 +36,8 @@ if __name__ == '__main__':
                     break
                 else:
                     print("Invalid entry. Please retry!")
-
         elif user_input.lower() == "c":
+            user.write_json_file()
             print("Thanks for using the Work Log program!")
             print("Come again soon.")
             break

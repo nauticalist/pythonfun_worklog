@@ -161,15 +161,53 @@ class User:
             user_choice = input("\n[N]ext [P]revious" +
                                 " [E]dit [D]elete [M]ain Menu\n> ")
             if user_choice.upper() == "N":
-                index += 1
+                if index == total_tasks - 1:
+                    index = 0
+                else:
+                    index += 1
             elif user_choice.upper() == "P":
-                index -= 1
+                if index == 0:
+                    index = total_tasks - 1
+                else:
+                    index -= 1
             elif user_choice.upper() == "E":
-                pass
+                self.edit_task(tasks[index])
+                self.tasks = tasks
             elif user_choice.upper() == "D":
-                pass
+                confirm = input(
+                    "Do you realy want to remove this task?(Y/n)\n>")
+                while confirm.upper() == "Y":
+                    del tasks[index]
+                    total_tasks = len(tasks)
+                    self.tasks = tasks
+                    if total_tasks == 0:
+                        break
+                    else:
+                        index = 0
+                        break
             elif user_choice.upper() == "M":
                 break
             else:
                 print("Invalid entry. Please retry")
 
+    def edit_task(self, task):
+        while True:
+            print("*"*25)
+            print("Editing task:")
+            print("*"*25)
+            print(task)
+            print("*"*25)
+            print("New Values:")
+            print("*"*25)
+            print("Date of the task")
+            date = utils.get_date()
+            date = utils.convert_date_to_string(date)
+            title = input("Title of the task: ")
+            time_spent = utils.get_time_spent()
+            notes = input("Notes (Optional, you can leave this empty): ")
+            task.date = date
+            task.title = title
+            task.time_spent = time_spent
+            task.notes = notes
+            print("Task updated")
+            break
